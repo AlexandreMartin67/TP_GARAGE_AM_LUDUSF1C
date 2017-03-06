@@ -1,0 +1,304 @@
+PROGRAMME garage_automobile;
+//but : Crée 2 garages , des voitures , générer des plaque d'immatiriculation , calculer les différente valeur(age ,argus , ...) valider les saissies et associer les voitures au différent garages
+//entrée : toutes les informations sur les garages et sur les voitures
+//sortie : afficher les garages et leurs véhicules , afficher le garage qui as le plus ancien modéle , afficher le véicule le plus ancien , afficher la moyenne des vaeurs des véhicule par garage et pour les deux garage , afficher le véhicule le plus cher en valeur neuf anisi que le plus cher en cote argus 3 ans
+
+CONST
+	annee_courante = 2017
+
+TYPE
+	adressage = ENREGISTREMENT
+		num_voie : ENTIER
+		cp : ENTIER
+		ville : CHAINE
+		pays : CHAINE
+		num_tel : ENTIER
+		email : CHAINE
+FIN
+
+TYPE
+	voiture = ENREGISTREMENT
+		marque : CHAINE
+		modele : CHAINE
+		energie : CHAINE
+		puissance_fiscale : CHAINE
+		puissance_DYN : CHAINE
+		couleur : CHAINE
+		option : CHAINE
+		annee_du_modele : ENTIER
+		prix_du_modele : ENTIER
+		cote_argus : ENTIER
+		date_de_mise_en_circulation : ENTIER
+		age : ENTIER
+		plaque_immatiriculation : CHAINE
+FIN
+
+TYPE
+	tableau_voiture = TABLEAU [1..15] DE voiture
+
+TYPE
+	garage = ENREGISTREMENT
+		nom : CHAINE
+		adresse : adressage
+		capaciter_max : ENTIER
+		capaciter_min :ENTIER
+		tab_voiture : tableau_voiture 
+FIN
+
+TYPE
+	tableau_garage = TABLEAU [1..2] DE garage
+
+PROCEDURE nom_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		nom_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer le nom de votre garage")
+		LIRE (nom_temporaire)
+		tableau_garage[compteur_garage].nom <- nom_temporaire
+	FIN 
+FIN PROCEDURE
+
+PROCEDURE num_voie_adressage_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		num_voie_temporaire : ENTIER
+	DEBUT
+		ECRIRE ("entrer le num de voie de votre garage")
+		LIRE (num_voie_temporaire)
+		tab_garage[compteur_garage].adresse.num_voie <- num_voie_temporaire
+	FIN 
+FIN PROCEDURE
+
+PROCEDURE CP_adressage_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		cp_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer le cp de votre garage")
+		LIRE (cp_temporaire)
+		tab_garage[compteur_garage].adresse.cp <- cp_temporaire
+	FIN 
+FIN PROCEDURE
+
+PROCEDURE ville_adressage_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		ville_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer la ville de votre garage")
+		LIRE (ville_temporaire)
+		tab_garage[compteur_garage].adresse.ville <- ville_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE num_tel_adressage_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		num_tel_temporaire : ENTIER
+	DEBUT
+		REPETER
+			ECRIRE ("entrer la num_tel de votre garage")
+			LIRE (num_tel_temporaire)
+		JUSQU'A (longeur(num_tel_temporaire)=6)
+		tab_garage[compteur_garage].adresse.num_tel <- num_tel_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE pays_adressage_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		pays_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer le pays de votre garage")
+		LIRE (pays_temporaire)
+		tab_garage[compteur_garage].adresse.pays <- pays_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE email_adressage_garage (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		email_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer l'email de votre garage")
+		LIRE (email_temporaire)
+		tab_garage[compteur_garage].adresse.email <- email_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE marque_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		marque_temporaire : CHAINE
+	DEBUT
+		REPETER
+			ECRIRE ("entrer la marque de votre voiture")
+			LIRE (marque_temporaire)
+		JUSQU'A (marque_temporaire = "DACIA") OU (marque_temporaire = "OPEL") OU (marque_temporaire = "RENAUT") OU (marque_temporaire = "SUZUKI") OU (marque_temporaire = "PEUGOT")
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].marque <- marque_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE modele_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		modele_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer le modele de votre voiture")
+		LIRE (modele_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].modele <- modele_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE energie_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		energie_temporaire : CHAINE
+	DEBUT
+		REPETER
+			ECRIRE ("entrer le energie de votre voiture")
+			LIRE (energie_temporaire)
+		JUSQU'A (energie_temporaire = "ESSENCE") OU (energie_temporaire = "DIESEL") OU (energie_temporaire = "GPL") OU (energie_temporaire = "ELECTRIQUE") OU (energie_temporaire = "HYBRIDE")
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].energie <- energie_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE puissance_fiscale_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		puissance_fiscale_temporaire : ENTIER
+	DEBUT
+		ECRIRE ("entrer la puissance fiscale de votre voiture")
+		LIRE (puissance_fiscale_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].puissance_fiscale <- puissance_fiscale_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE puissance_DYN_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		puissance_DYN_temporaire : ENTIER
+	DEBUT
+		ECRIRE ("entrer la puissance DYN de votre voiture")
+		LIRE (puissance_DYN_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].puissance_DYN <- puissance_DY_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE couleur_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		couleur_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer la couleur de votre voiture")
+		LIRE (couleur_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].couleur <- couleur_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE option_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+	VAR
+		option_temporaire : CHAINE
+	DEBUT
+		ECRIRE ("entrer les options de votre voiture pour plusieur option séparer les par un #")
+		LIRE (option_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].option <- option_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE annee_du_modele_voiture(tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		annee_du_modele_temporaire : ENTIER
+	DEBUT
+		ECRIRE ("entrer l' annee du modele de votre voiture")
+		LIRE (annee_du_modele_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].annee_du_modele <- annee_du_modele_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE prix_du_modele_voiture(tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		prix_du_modele_temporaire : ENTIER
+	DEBUT
+		ECRIRE ("entrer le prix du modele de votre voiture")
+		LIRE (prix_du_modele_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].prix_du_modele <- prix_du_modele_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE age_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	DEBUT
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].age <-annee_courante - tab_garage[compteur_garage].tab_voiture[compteur_voiture].annee_du_modele
+	FIN
+FIN PROCEDURE
+
+PROCEDURE cote_argus_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	DEBUT
+		CAS tab_garage[compteur_garage].tab_voiture[compteur_voiture].age PARMI
+			0: tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <-tab_garage[compteur_garage].tab_voiture[compteur_voiture].prix_du_modele
+			1:DEBUT
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- tab_garage[compteur_garage].tab_voiture[compteur_voiture].prix_du_modele/100*75
+			FIN
+			2:DEBUT
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- tab_garage[compteur_garage].tab_voiture[compteur_voiture].prix_du_modele/100*75
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus/100*90
+			FIN
+			3:DEBUT
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- tab_garage[compteur_garage].tab_voiture[compteur_voiture].prix_du_modele/100*75
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus/100*90
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus/100*90
+			FIN
+		SINON
+			DEBUT
+				tab_garage[compteur_garage].tab_voiture[compteur_voiture].cote_argus <- 0
+			FIN
+	FIN
+FIN PROCEDURE
+
+PROCEDURE date_de_mise_en_ciruclation_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		date_de_mise_en_ciruclation_temporaire : ENTIER
+	DEBUT
+		ECRIRE ("entrer la date de mise en ciruclation de votre voiture")
+		LIRE (date_de_mise_en_ciruclation_temporaire)
+		tab_garage[compteur_garage].tab_voiture[compteur_voiture].date_de_mise_en_ciruclation <- date_de_mise_en_ciruclation_temporaire
+	FIN
+FIN PROCEDURE
+
+PROCEDURE plaque_immatriculation_voiture (tab_garage : tableau_garage ; compteur_garage ,compteur_voiture : ENTIER)
+
+	VAR
+		plaque_immatriculation_temporaire : CHAINE
+		caractere_temporaire : CHAINE
+		i : ENTIER
+	DEBUT
+		POUR i=1 A 3 FAIRE
+			ALEATOIRE(2)+1
+			SI ALEATOIRE=1 ALORS
+				DEBUT
+				ALEATOIRE(10)
+				LIRE (caractere_temporaire)
+				FIN
+			SINON
+				DEBUT
+				ALEATOIRE(26)+164 // 164 correspond à  code ascii des lettre majuscule
+				LIRE (caractere_temporaire)
+				FIN
+			tab_garage[compteur_garage].tab_voiture[compteur_voiture].plaque_immatriculation <- plaque_immatriculation_temporaire
+	FIN
+FIN PROCEDURE
+
+VAR
+	tab_garage : tableau_garage
+	compteur_voiture : ENTIER
+	compteur_garage : ENTIER
+
+DEBUT
+	//il manque les boucle qui permette d'initialliser les valeurs au différente variable , il manque aussi par conséquent les différentes fonction d'affichage
+FIN.
