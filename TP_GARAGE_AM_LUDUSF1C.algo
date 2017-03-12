@@ -30,7 +30,7 @@ TYPE
 		cote_argus : ENTIER
 		date_de_mise_en_circulation : ENTIER
 		age : ENTIER
-		plaque_immatiriculation : CHAINE
+		plaque_immatriculation : CHAINE
 FIN
 
 TYPE
@@ -40,8 +40,6 @@ TYPE
 	garage = ENREGISTREMENT
 		nom : CHAINE
 		adresse : adressage
-		capaciter_max : ENTIER
-		capaciter_min :ENTIER
 		tab_voiture : tableau_voiture 
 FIN
 
@@ -290,15 +288,103 @@ PROCEDURE plaque_immatriculation_voiture (tab_garage : tableau_garage ; compteur
 				ALEATOIRE(26)+164 // 164 correspond à  code ascii des lettre majuscule
 				LIRE (caractere_temporaire)
 				FIN
+			FINSI
 			tab_garage[compteur_garage].tab_voiture[compteur_voiture].plaque_immatriculation <- plaque_immatriculation_temporaire
 	FIN
 FIN PROCEDURE
 
+PROCEDURE init_garage (tab_garage, compteur_garage ,compteur_voiture)
+	
+	DEBUT
+		nom_garage (tab_garage, compteur_garage ,compteur_voiture)
+		num_tel_adressage_garage (tab_garage, compteur_garage ,compteur_voiture)
+		CP_adressage_garage (tab_garage, compteur_garage ,compteur_voiture)
+		ville_adressage_garage (tab_garage, compteur_garage ,compteur_voiture)
+		pays_adressage_garage (tab_garage, compteur_garage ,compteur_voiture)
+		num_voie_adressage_garage (tab_garage, compteur_garage ,compteur_voiture)
+		email_adressage_garage (tab_garage, compteur_garage ,compteur_voiture)
+	FIN
+FIN PROCEDURE
+
+PROCEDURE init_voiture (tab_garage, compteur_garage ,compteur_voiture)
+
+	DEBUT
+		marque_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		modele_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		energie_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		puissance_fiscale_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		puissance_DYN_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		couleur_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		option_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		annee_du_modele_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		prix_du_modele_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		cote_argus_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		date_de_mise_en_ciruclation_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		age_voiture (tab_garage, compteur_garage ,compteur_voiture)
+		plaque_immatriculation_voiture (tab_garage, compteur_garage ,compteur_voiture)
+	FIN
+FIN PROCEDURE
+
+PROCEDURE affichage_garage_et_véhicule (tab_garage, compteur_garage ,compteur_voiture) 
+
+	VAR
+		i,y : ENTIER
+	DEBUT
+		POUR i=1 A 2 FAIRE
+			ECRIRE ("information du garage : "&i)
+			ECRIRE ("num tel : " & tab_garage[i].num_tel)
+			ECRIRE ("cp : " & tab_garage[i].cp)
+			ECRIRE ("ville : " & tab_garage[i].ville)
+			ECRIRE ("num de voie : " & tab_garage[i].num_voie)
+			ECRIRE ("email : " & tab_garage[i].email)
+			POUR y=1 A tab_compteur_voiture[i] FAIRE
+				DEBUT
+					ECRIRE ("informations de la voiture : "&y)
+					ECRIRE ("marque : " & tab_garage[i].tab_voiture[y].marque)
+					ECRIRE ("modele : " & tab_garage[i].tab_voiture[y].modele)
+					ECRIRE ("energie : " & tab_garage[i].tab_voiture[y].energie)
+					ECRIRE ("puissance fiscale : " & tab_garage[i].tab_voiture[y].puissance puissance_fiscale)
+					ECRIRE ("puissance DYN : " & tab_garage[i].tab_voiture[y].puissance_DYN)
+					ECRIRE ("couleur : " & tab_garage[i].tab_voiture[y].couleur)
+					ECRIRE ("option : " & tab_garage[i].tab_voiture[y].option)
+					ECRIRE ("annee du modele : " & tab_garage[i].tab_voiture[y].annee_du_modele)
+					ECRIRE ("prix du modele : " & tab_garage[i].tab_voiture[y].prix_du_modele)
+					ECRIRE ("cote argus : " & tab_garage[i].tab_voiture[y].cote_argus)
+					ECRIRE ("date de mise en ciruclation : " & tab_garage[i].tab_voiture[y].date_de_mise_en_ciruclation)
+					ECRIRE ("age : " & tab_garage[i].tab_voiture[y].age)
+					ECRIRE ("plaque_immatriculation : " & tab_garage[i].tab_voiture[y].plaque_immatriculation)
+					LIRE // permet de sauter une ligne
+				FIN
+			FINPOUR
+
+
+
 VAR
+	tab_compteur_voiture : TABLEAU [1..2] DE ENTIER 
 	tab_garage : tableau_garage
 	compteur_voiture : ENTIER
 	compteur_garage : ENTIER
+	i : ENTIER
+	choix : CHAINE
 
 DEBUT
-	//il manque les boucle qui permette d'initialliser les valeurs au différente variable , il manque aussi par conséquent les différentes fonction d'affichage
+	POUR i=1 A 2 FAIRE
+		DEBUT
+			compteur_voiture <- 0
+			compteur_garage <- compteur_garage+1
+			init_garage (tab_garage, compteur_garage ,compteur_voiture)
+			REPETER
+				compteur_voiture <- compteur_voiture+1
+				tab_compteur_voiture[i]<- compteur_voiture
+				init_voiture (tab_garage, compteur_garage ,compteur_voiture)
+				SI (compteur_voiture >6) ALORS
+					DEBUT
+						ECRIRE("voulez vous continuer ? Y/N ?")
+						LIRE (choix)
+					FIN
+				FINSI
+			JUSQU'A (compteur_voiture > 6) ET (compteur_voiture = 15) OU (choix ="N")
+		FIN
+	FINPOUR
+
 FIN.
